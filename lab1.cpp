@@ -1,3 +1,5 @@
+/*starter file for lab1*/
+
 unsigned int factorial(unsigned int n){
 	
 }
