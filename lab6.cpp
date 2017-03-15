@@ -46,7 +46,7 @@ void quickSort(int arr[],int size){
 }
 void generateRandomArray(int array[],int size){
   for(int i=0;i<size;i++){
-    myarr[i]=rand();
+    array[i]=rand();
   }
 
 }
