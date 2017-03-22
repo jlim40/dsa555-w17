@@ -554,7 +554,7 @@ int main(int argc, char* argv[]){
         throw Error("hashtable::remove is returning true for removing non-existing record",testnumber);
       }
     }
-    timing[6]=t2.currtime();
+    hashTiming[6]=t2.currtime();
     testnumber++;
     cout << endl;
     cout << "Checking hashtableCopy to see that it was unaffected by removing from hashtable" << endl;
