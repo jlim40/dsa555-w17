@@ -12,6 +12,44 @@ class BST{
 		}
 	};
 	Node* root_;
+	void remove(const T& data,Node*& rt){
+		if(rt){
+			if(rt->data_ == data){
+				Node* rm =rt;
+				if(rt->left_==nullptr && rt->right_==nullptr){
+					//If the node is a leaf
+					//make link from parent a nullptr		
+					rt=nullptr;
+				}
+				else if(rt->left_!= nullptr && rt->right_!=nullptr){
+						//if the node has two children
+		    			//find the node's inorder successor (next biggest decsendent node)
+		    			//detach the inorder successor
+				    //the inorder successor will take the place of the node being deleted
+				    //ie parent points to this node, this node points to the two children
+
+				}
+				else{
+					if(rt->right_){
+						//right child only
+					}
+					else
+						//left child only
+				}
+
+				delete rm;
+		//if the node has one child
+		    //make link from parent point to only child
+				//found it!  yay!  unlink and remove
+			}
+			else if(data < rt->data_){
+				remove(data,rt->left_);
+			}
+			else{
+				remove(data,rt->right_);
+			}
+		}
+	}
 	void insert(const T& data,Node*& rt){
 		if(rt == nullptr){
 			rt=new Node(data);
@@ -123,17 +161,9 @@ public:
 		}
 	}
 	void remove(const T& data){
+		remove(data,root_);
 		//find the node containing data
-		//If the node is a leaf
-		    //make link from parent a nullptr
-		//if the node has one child
-		    //make link from parent point to only child
-		//if the node has two children
-		    //find the node's inorder successor (next biggest decsendent node)
-		    //detach the inorder successor
-		    //the inorder successor will take the place of the node being deleted
-		    //ie parent points to this node, this node points to the two children
-
+		
 	}
 	void print(const int order=1) const{
 		switch(order){
