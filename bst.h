@@ -1,10 +1,11 @@
+#include "queuearr.h"
 template <typename T>
 class BST{
 	struct Node{
 		T data_;
 		Node* left_;
 		Node* right_;
-		Node(const T& data=T{},Node* left, Node* right){
+		Node(const T& data=T{},Node* left=nullptr, Node* right=nullptr){
 			left_=left;
 			right_=right;
 			data_=data;
@@ -68,6 +69,19 @@ class BST{
 			reverseOrderPrint(rt->left_);
 		}
 	}
+	void breadthfirstPrint() const{
+		Queue<Node*> q;
+		q.enqueue(root_);
+		while(!q.isEmpty()){
+			Node* curr=q.front();
+			cout << curr->data_ << endl;
+			q.dequeue();  //removes front item
+			if(curr->left_)
+				q.enqueue(curr->left_);
+			if(curr->right_)
+				q.enqueue(curr->right_);
+		}
+	}
 
 public:
 	BST(){
@@ -108,13 +122,25 @@ public:
 			}
 		}
 	}
-	void remove(const T& data);
+	void remove(const T& data){
+		//find the node containing data
+		//If the node is a leaf
+		    //make link from parent a nullptr
+		//if the node has one child
+		    //make link from parent point to only child
+		//if the node has two children
+		    //find the node's inorder successor (next biggest decsendent node)
+		    //detach the inorder successor
+		    //the inorder successor will take the place of the node being deleted
+		    //ie parent points to this node, this node points to the two children
+
+	}
 	void print(const int order=1) const{
 		switch(order){
 			case 1: preOrderPrint(root_); break;
 			case 2: inOrderPrint(root_); break;
 			case 3: postOrderPrint(root_); break;
-			case 4: reversePrint(root_); break;
+			case 4: reverseOrderPrint(root_); break;
 			case 5: breadthfirstPrint(); break;
 			default: preOrderPrint(root_);
 		}
