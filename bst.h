@@ -12,6 +12,19 @@ class BST{
 		}
 	};
 	Node* root_;
+	//detaches the smallest node from subtree with root rt and 
+	//return its address
+	Node* detachInorderSuccessor(Node*& rt){
+		Node* rc;
+		if(rt->left_==nullptr){
+			rc=rt;
+			rt=rt->right_;
+		}
+		else{
+			rc=detachInorderSuccessor(rt->left_);
+		}
+		return rc;
+	}
 	void remove(const T& data,Node*& rt){
 		if(rt){
 			if(rt->data_ == data){
@@ -25,15 +38,21 @@ class BST{
 						//if the node has two children
 		    			//find the node's inorder successor (next biggest decsendent node)
 		    			//detach the inorder successor
+						Node* inorderSuccessor = detachInorderSuccessor(rt->right_);
 				    //the inorder successor will take the place of the node being deleted
 				    //ie parent points to this node, this node points to the two children
-
+						inorderSuccessor->left_=rt->left_;
+						inorderSuccessor->right_=rt->right_;
+						rt=inorderSuccessor;
 				}
 				else{
 					if(rt->right_){
 						//right child only
+						rt=rt->right_;
 					}
-					else
+					else{
+						rt=rt->left_;
+					}
 						//left child only
 				}
 
