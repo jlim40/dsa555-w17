@@ -21,6 +21,11 @@ class AVL{
 		}
 		int rightHeight(){
 			return (right_)?right_->height_:0;
+		}
+		void setHeight(){
+			int lh=leftHeight();
+			int rh=rightHeight();
+			height_=(lh>rh)?lh+1:rh+1;
 		}	
 	};
 	Node* root_;
@@ -34,7 +39,13 @@ class AVL{
 		n = B;
 	}
 	void rightRotate(Node*& n){
+		Node* A=n;
+		Node* B=A->left_;
+		Node* Y=B->right_;
 
+		A->left_=Y;
+		B->right_=A;
+		n=B;
 	}
 	void insert(const T& data,Node*& rt){
 		if(rt == nullptr){
@@ -43,19 +54,42 @@ class AVL{
 		else{
 			if(data < rt->data_){
 				insert(data,rt->left_);
-				if(rt->balance() > 1 || rt->balance() < -1){
-					//do rotation to fix tree
-				}
-				else{
-					int lh=rt->leftHeight();
-					int rh=rt->rightHeight();
-					rt->height_=(lh>rh)?lh+1:rh+1;
-				}
 
 			}
 			else{
 				insert(data,rt->right_);
 			}
+			if(rt->balance() >= 2 ){
+				if(rt->right_->balance() >= 1){
+					leftRotate(rt);
+					rt->right_->setHeight();
+					rt->setHeight();
+				}
+				else{
+					rightRotate(rt->right_);
+					leftRotate(rt);
+					rt->left_->setHeight();
+					rt->right_->setHeight();
+					rt->setHeight();
+				}
+			}
+			else if(rt->balance() <= -2){
+				if(rt->left_->balance() <= -1){
+					rightRotate(rt);
+					rt->left_->setHeight();
+					rt->setHeight();
+				}
+				else{
+					leftRotate(rt->left_);
+					rightRotate(rt);
+					rt->left_->setHeight();
+					rt->right_->setHeight();
+					rt->setHeight();				}
+			}
+			else{
+				rt->setHeight();
+			}
+
 		}
 	}
 	void preOrderPrint(const Node* rt)const{
