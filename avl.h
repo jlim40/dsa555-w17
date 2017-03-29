@@ -14,7 +14,6 @@ class AVL{
 		}
 		//returns the height of right subtree - height left subtree
 		int balance()const{
-			int rightHeight=
 			return rightHeight()-leftHeight();
 		}
 		int leftHeight(){
@@ -25,6 +24,18 @@ class AVL{
 		}	
 	};
 	Node* root_;
+	void leftRotate(Node*& n){
+		Node* A=n;
+		Node* B=n->right_;
+		Node* Y=B->left_;
+
+		A->right_= Y;
+		B->left_= A;
+		n = B;
+	}
+	void rightRotate(Node*& n){
+
+	}
 	void insert(const T& data,Node*& rt){
 		if(rt == nullptr){
 			rt=new Node(data);
@@ -38,7 +49,7 @@ class AVL{
 				else{
 					int lh=rt->leftHeight();
 					int rh=rt->rightHeight();
-					height_=(lh>rh)?lh+1:rh+1;
+					rt->height_=(lh>rh)?lh+1:rh+1;
 				}
 
 			}
